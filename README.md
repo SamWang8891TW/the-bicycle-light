@@ -3,3 +3,5 @@ This bicycle is designed to be easy-carry, easy-charge, and provide turning sign
 
 Currently version: v0.1 alpha (unfinished)
 目前版本：v0.1 alpha （尚未完成）
+
+Please kindly check the pcb version before doing any operation.

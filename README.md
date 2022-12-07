@@ -20,12 +20,35 @@ PART I, I AM THE USER OF THE PRODUCT AND WANT TO UNDERSTAND HOW TO OPERATE:
     -Main control
         Installed on the handle of the bicycle, being as the control(remote) of the whole system.
 
-2.Functionalities:
-  Front light: It has a light strip which can light up the road infront of you. It has a button and a indicate led light. The button is used as single-operation mode which user decided to use it without a main control connected.  
+2.Functionalities(
+Note the manual is avilable as a pdf file in the repo(will be uploaded).):
 
-3.Using instructions:
+  Front light: 
+    -It has a white light strip which can light up the road infront of you. It has a button and a indicate led light. 
+    -The button is used as single-operation mode which user decided to use it without a main control connected. When the button is pressed, the light can be switched on or off without the main control.
+    -The led is a multi-funtional indicate light. 
+        LED ON --> Light is on or the device is charging(when plugged). 
+        LED OFF --> Light is off or fully charged(when plugged).
+        LED FLAHING --> Battery low.
+       
+  Rear light:
+    -It has three light strip, main read light(red) and left/right light(yellow) for turing singals. It has a button and a indicate led light. 
+    -The button is used as single-operation mode which user decided to use it without a main control connected. When the button is pressed, it then disable all ongoing turing signal light and proceed being a switch of the main light. Turning singla light is not accessable while is single-operation mode.
+    -The led is a multi-funtional indicate light. 
+        LED ON --> Main light is on or the device is charging(when plugged). 
+        LED OFF --> Main light is off or fully charged(when plugged).
+        LED FLAHING --> Battery low.
+   
+  Main control:
+    -User can control the whole system using is control.
+    -It has 4 buttons: Main lights switch, left turning signal, right turning signal and dual flash(warning light).
+    -It has 5 LEDs, indicating: Head(Front) light on/off, rear light on/off, left turning signal on/off and right turning signal on/off.
+    -When the button is pressed, the vibrator vibrates(and the buzzor beeps if the user has enabled via the code), it then turn the light on or off depend on which button user pressed. To confirm the operation, user can view the indicate LEDs to make sure that they did the operation correctly. Note that the indicate LED does not flash as the real light, constantly on instead.
+    
+    
+3.Instructions
 
-Note the manual is avilable as a pdf file in the repo(will be uploaded).
+
 
 
 

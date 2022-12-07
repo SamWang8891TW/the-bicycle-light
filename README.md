@@ -47,10 +47,11 @@ Note the manual is avilable as a pdf file in the repo(will be uploaded).):
     
     
 3.Instructions
-
-
-
-
+    (1). To use the light, first user take out the lights and the main control from the charging case. Please check the battery level by watching the indicating LED is flasing or not.
+    (2). To installed the front and rear light, user needs to untie the hook and loop tape, then tie the lights on the prefered place of the bicycle.
+    (3). (OPTIONAL) To install the main control, user needs to untie the hook and loop take of the control and do the same thing as the light. Please make sure that user is accessable with their hand during riding the biycle.
+    (4). User needs to test every function of the light before the ride, if any issues please create an ISSUE.
+    (5). After the ride user then took off the lights and controler and put then back into the charging case. Please wait and see the charging light lids up before closing the case.
 
 
 

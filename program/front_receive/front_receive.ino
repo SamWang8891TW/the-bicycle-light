@@ -1,8 +1,3 @@
-/*
-Define Radio.
-g --> mid on
-h --> mid off
-*/
 
 #define CE 7  //radio CE pin
 #define CSN 8 //radio CSN pin
@@ -14,17 +9,18 @@ h --> mid off
 #include <SPI.h>
 #include "RF24.h"
 
-
 //radio211
 RF24 rf24(CE, CSN);
 const byte addr[] = "1Node";
 const byte pipe = 1;  // 指定通道編號
 
-
 bool b_mid = false; //bool for mid
 
-
-
+/*
+Define Radio.
+g --> mid on
+h --> mid off
+*/
 char on[32] = "g";
 char off[32] = "h";
 
@@ -46,7 +42,7 @@ void setup() {
     //pin initialize
     
     pinMode(r_mid, OUTPUT);
-    pinMode(l_stats, OUTPUT);
+    //pinMode(l_stats, OUTPUT);
     pinMode(l_mid, OUTPUT);
     pinMode(bt_main, INPUT);
     Serial.println("Pin initialized!");
@@ -58,51 +54,47 @@ void setup() {
 }
 
 void loop() {
-    //Serial.println("looped");
-    //write bool status to relays and indicate lights
-    digitalWrite(r_mid, b_mid);
+  //Serial.println("looped");
+  //write bool status to relays and indicate lights
+  digitalWrite(r_mid, b_mid);
 
-
-        
-    //detect button status and react to it
+  //detect button status and react to it
+  if(digitalRead(bt_main) == true){
+    delay(200);
     if(digitalRead(bt_main) == true){
-        delay(200);
-        if(digitalRead(bt_main) == true){
-            b_mid = !b_mid;
-            Serial.println("Button pressed, turning signal light off and change mid light status.");
-            delay(500);
-        }
+      b_mid = !b_mid;
+      Serial.println("Button pressed, turning signal light off and change mid light status.");
+      delay(500);
     }
+  }
+  
+  //radio receive
+  if (rf24.available(&pipe)){
+    //Serial.println("entered");
+    char msg[32] = "";
+    //Serial.println("oneee");
+    rf24.read(&msg, sizeof(msg));
+    //Serial.println("twoooo");
+    Serial.println(msg); // 顯示訊息內容
     
-    
-    
-    //radio receive
-    if (rf24.available(&pipe)){
-        //Serial.println("entered");
-        char msg[32] = "";
-        //Serial.println("oneee");
-        rf24.read(&msg, sizeof(msg));
-        //Serial.println("twoooo");
-        Serial.println(msg); // 顯示訊息內容
-        
-        //Serial.println("Starting if");
-        if(strcmp(msg, on) == 0){
-            digitalWrite(l_stats, HIGH);
-            Serial.println("Mid on!");
-            b_mid = true;
-            delay(500);
-            digitalWrite(l_stats, LOW);
-        }
-        else if(strcmp(msg, off) == 0){
-            digitalWrite(l_stats, HIGH);
-            Serial.println("Mid off!");
-            b_mid = false;
-            delay(500);
-            digitalWrite(l_stats, LOW);
-        }
-        else{
-            Serial.println("Ignore!");
-            digitalWrite(l_stats, HIGH);
-        }
+    //Serial.println("Starting if");
+    if(strcmp(msg, on) == 0){
+      digitalWrite(l_stats, HIGH);
+      Serial.println("Mid on!");
+      b_mid = true;
+      delay(500);
+      digitalWrite(l_stats, LOW);
     }
+    else if(strcmp(msg, off) == 0){
+      digitalWrite(l_stats, HIGH);
+      Serial.println("Mid off!");
+      b_mid = false;
+      delay(500);
+      digitalWrite(l_stats, LOW);
+    }
+    else{
+      Serial.println("Ignore!");
+      digitalWrite(l_stats, HIGH);
+    }
+  }
 }

@@ -1,3 +1,7 @@
+#define bzsw true   //true to enable buzzer, false to disable
+
+
+
 #define CE 7   //radio CE pin
 #define CSN 8  //radio CSN pin
 #define l_fonrt A0
@@ -11,7 +15,7 @@
 #define bt_dual 6   //button for dual flash
 #define vmotor 9    //relay vibrate motor
 #define bz 2        //relay bz
-#define bzsw true   //true to enable buzzer, false to disable
+
 
 #include <SPI.h>
 #include "RF24.h"
@@ -48,12 +52,12 @@ char dual[32] = "f";
 2->back
 3->dual
 */
-int mode = 0;
+bool b_mmode = false;
 bool b_lmode = false;
 bool b_rmode = false;
 bool b_dfmode = false;  //dual flash
-
 bool b_dualstate = false;
+
 bool b_main = false;
 bool b_left = false;
 bool b_right = false;
@@ -123,26 +127,23 @@ void loop() {
   if (b_main == true) {
     b_main = false;
     Serial.print("Main send sig, mode:");
-    mode++;
-    if (mode == 4)
-      mode = 0;
-    Serial.print(mode);
-    Serial.print("\n");
-    if (mode == 0) {
-      rf24.write(&off, sizeof(off));
-      rf24.write(&moff, sizeof(moff));
-    }
-    if (mode == 1) {
-      rf24.write(&on, sizeof(on));
-      rf24.write(&moff, sizeof(moff));
-    }
-    if (mode == 2) {
-      rf24.write(&off, sizeof(off));
-      rf24.write(&mon, sizeof(mon));
-    }
-    if (mode == 3) {
+    b_mmode = !b_mmode;
+
+    if(b_mmode){
       rf24.write(&on, sizeof(on));
       rf24.write(&mon, sizeof(mon));
+      rf24.write(&on, sizeof(on));
+      rf24.write(&mon, sizeof(mon));
+      rf24.write(&on, sizeof(on));
+      rf24.write(&mon, sizeof(mon));
+    }
+    else{
+      rf24.write(&off, sizeof(off));
+      rf24.write(&moff, sizeof(moff));
+      rf24.write(&off, sizeof(off));
+      rf24.write(&moff, sizeof(moff));
+      rf24.write(&off, sizeof(off));
+      rf24.write(&moff, sizeof(moff));
     }
   }
 
@@ -209,7 +210,7 @@ void loop() {
 }
 
 
-int beep() {
+void beep() {
   if (bzsw == true)
     digitalWrite(bz, HIGH);
   digitalWrite(vmotor, HIGH);

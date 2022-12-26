@@ -131,18 +131,18 @@ void loop() {
 
     if(b_mmode){
       rf24.write(&on, sizeof(on));
-      rf24.write(&mon, sizeof(mon));
+      rf24.write(&on, sizeof(on));
       rf24.write(&on, sizeof(on));
       rf24.write(&mon, sizeof(mon));
-      rf24.write(&on, sizeof(on));
+      rf24.write(&mon, sizeof(mon));
       rf24.write(&mon, sizeof(mon));
     }
     else{
       rf24.write(&off, sizeof(off));
-      rf24.write(&moff, sizeof(moff));
+      rf24.write(&off, sizeof(off));
       rf24.write(&off, sizeof(off));
       rf24.write(&moff, sizeof(moff));
-      rf24.write(&off, sizeof(off));
+      rf24.write(&moff, sizeof(moff));
       rf24.write(&moff, sizeof(moff));
     }
   }

@@ -10,6 +10,7 @@
 #define l_mid 5             //大燈指示led燈腳位
 #define l_left 6            //左轉指示led燈腳位
 #define l_right 9           //右轉指示led燈腳位
+#define l_state 1000
 #define bt_main 14          //大燈手動開啟的按鍵腳位
 
 
@@ -20,7 +21,7 @@
 
 bool b_mid = false;                 //大燈按鈕是否觸發的布林函數
 bool b_left = false;                //左轉燈按鈕是否觸發的布林函數
-bool b_dual = false;                //警示燈是否觸發的布林函數
+bool b_flash = false;               //左右燈是否觸發閃爍程式的布林函數
 bool b_right = false;               //右轉燈按鈕是否觸發的布林函數
 bool b_leftstats = false;           //是否正在使用左轉燈的布林函數
 bool b_rightstats = false;          //是否正在使用左轉燈的布林函數
@@ -72,7 +73,7 @@ void setup() {
   pinMode(r_mid, OUTPUT);
   pinMode(r_left, OUTPUT);
   pinMode(r_right, OUTPUT);
-  pinMode(l_stats, OUTPUT);
+  pinMode(l_state, OUTPUT);
   pinMode(l_mid, OUTPUT);
   pinMode(l_left, OUTPUT);
   pinMode(l_right, OUTPUT);
@@ -113,7 +114,7 @@ void loop() {
   digitalWrite(r_mid, b_mid);
   digitalWrite(l_mid, b_mid);
 
-  while (b_dual) {  //讓方向燈及警示燈閃爍
+  while (b_flash) {  //讓方向燈及警示燈閃爍
     unsigned long currectMillis = millis();
     if (currectMillis - previousMillis >= flashing_cycle) {
       previousMillis = currectMillis;
@@ -124,6 +125,7 @@ void loop() {
         digitalWrite(l_right, LOW);
       } else if (b_right == false && b_rightstats) {
         b_right = true;
+        Serial.println("right_tick");
         digitalWrite(r_right, HIGH);
         digitalWrite(l_right, HIGH);
       }
@@ -134,6 +136,7 @@ void loop() {
         digitalWrite(l_left, LOW);
       } else if (b_left == false && b_leftstats) {
         b_left = true;
+        Serial.println("left_tick");
         digitalWrite(r_left, HIGH);
         digitalWrite(l_left, HIGH);
       }
@@ -156,8 +159,8 @@ void loop() {
     b_leftstats = false;
     b_rightstats = false;
     b_right = false;
-    b_dual = false;
-    b_midorgstats = false;
+    b_flash = false;
+    b_midorgstate = false;
     Serial.println("Button pressed, turning signal light off and change mid light stats.");
   }
 
@@ -175,23 +178,24 @@ void loop() {
 
     } else if (strcmp(msg, off) == 0) {  //判斷接收到的訊息是否為關大燈
       Serial.println("Mid off!");
-      b_mid = false;
+      if(b_midorgstate){
+        b_midorgstate = false;
+      }      
       delay(500);
 
-    } else if (strcmp(msg, lon) == 0 || Serial.read() == 51) { //判斷接收到的訊息是否為開啟左邊方向燈
+    } else if (strcmp(msg, lon) == 0) { //判斷接收到的訊息是否為開啟左邊方向燈
       Serial.println("Left on!");
 
       previousMillis = millis() - 100000;  //讓閃爍程式馬上觸發
-      b_rightstats = false;
+      
 
       if (b_mid == false && b_rightstats == false) { //如果大燈未開啟及且另一邊的方向燈未啟用，則先開啟大燈再開啟方向燈以便後車辨認方向燈方向
         b_midorgstate = true; //將原本大燈的狀態儲存，以便之後關閉方向燈之後還原大燈狀態
-        digitalWrite(r_mid, HIGH);
-        digitalWrite(l_mid, HIGH);
+        b_mid = true;
       }
       b_right = false;                  //關閉另一邊的方向燈
-      
-      b_dual = true;
+      b_rightstats = false;
+      b_flash = true;
       b_left = true;
       b_leftstats = true;
       delay(500);
@@ -200,16 +204,14 @@ void loop() {
       Serial.println("Right on!");
       previousMillis = millis() - 100000;  //讓閃爍程式馬上觸發
 
-      
-      if (b_mid == false && b_left == false) { //如果大燈未開啟及另一邊的方向燈未啟用，則先開啟大燈再開啟方向燈以便後車辨認方向燈方向
+      if (b_mid == false && b_leftstats == false) { //如果大燈未開啟及另一邊的方向燈未啟用，則先開啟大燈再開啟方向燈以便後車辨認方向燈方向
         b_midorgstate = true; //將原本大燈的狀態儲存，以便之後關閉方向燈之後還原大燈狀態
-        digitalWrite(r_mid, HIGH);
-        digitalWrite(l_mid, HIGH);
+        b_mid = true;
       }
       b_left = false;                   //關閉另一邊的方向燈
-
-      b_dual = true;
-      b_right = true;
+      b_leftstats = false;
+      b_flash = true;
+      b_right = false;
       b_rightstats = true;
       delay(500);
 
@@ -220,11 +222,10 @@ void loop() {
       digitalWrite(r_right, LOW);
       digitalWrite(l_right, LOW);
       if (b_midorgstate){
-        digitalWrite(r_mid, LOW);
-        digitalWrite(l_mid, LOW);
+        b_mid = false;
       }
       b_midorgstate = false;
-      b_dual = false;
+      b_flash = false;
       b_right = false;
       b_left = false;
       b_rightstats = false;
@@ -235,15 +236,14 @@ void loop() {
       Serial.println("Dual Flash!"); 
 
       previousMillis = millis() - 100000;  //讓閃爍程式馬上觸發
-      if (b_mid == false && b_left == false &&) { //如果大燈未開啟及方向燈未啟用，則先開啟大燈再開啟方向燈以便後車辨認方向燈方向
+      if (b_mid == false && b_left == false) { //如果大燈未開啟及方向燈未啟用，則先開啟大燈再開啟方向燈以便後車辨認方向燈方向
         b_midorgstate = true; //將原本大燈的狀態儲存，以便之後關閉方向燈之後還原大燈狀態
-        digitalWrite(r_mid, HIGH);
-        digitalWrite(l_mid, HIGH);
+        b_mid = true;
       }
 
       b_left = true;
       b_right = true;
-      b_dual = true;
+      b_flash = true;
       b_rightstats = true;
       b_leftstats = true;
       delay(500);

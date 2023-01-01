@@ -8,10 +8,10 @@
 #define l_left A2   //左轉方向燈指示led燈腳位
 #define l_right A3  //右轉方向燈指示led燈腳位
 #define l_stats A4  //狀態指示led燈腳位
-#define bt_mid 3    //大燈(中間)按鈕腳位
+#define bt_mid 5    //大燈(中間)按鈕腳位
 #define bt_left 4   //左轉方向燈按鈕腳位
-#define bt_right 5  //右轉方向燈按鈕腳位
-#define bt_dual 6   //警示燈按鈕腳位
+#define bt_right 6  //右轉方向燈按鈕腳位
+#define bt_dual 3   //警示燈按鈕腳位
 #define vmotor 9    //震動馬達繼電器腳位
 #define bz 2        //蜂鳴器繼電器腳位
 
@@ -82,19 +82,19 @@ void setup() {
   //讓所有燈都亮過一遍檢查錯誤
   Serial.println("Testing lights...");
   digitalWrite(l_mid, HIGH);
-  delay(2000);
+  delay(1000);
   digitalWrite(l_mid, LOW);
-  delay(2000);
+  delay(1000);
   digitalWrite(l_left, HIGH);
-  delay(2000);
+  delay(1000);
   digitalWrite(l_left, LOW);
-  delay(2000);
+  delay(1000);
   digitalWrite(l_right, HIGH);
-  delay(2000);
+  delay(1000);
   digitalWrite(l_right, LOW);
-  delay(2000);
+  delay(1000);
   digitalWrite(l_stats, HIGH);
-  delay(2000);
+  delay(1000);
   digitalWrite(l_stats, LOW);
 
 
@@ -237,7 +237,6 @@ void loop() {
     b_dual = false;
     b_lstats = false;
     b_rstats = false;
-    b_dfstats = !b_dfstats;
     if (b_dfstats) {
       Serial.println("flash off");
       rf24.write(&foff, sizeof(foff));
@@ -256,6 +255,7 @@ void loop() {
       digitalWrite(l_left, HIGH);
       digitalWrite(l_right, HIGH);
     }
+    b_dfstats = !b_dfstats;
     delay(500);
   }
 }

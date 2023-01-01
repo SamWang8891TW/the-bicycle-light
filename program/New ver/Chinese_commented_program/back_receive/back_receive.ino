@@ -180,7 +180,8 @@ void loop() {
       Serial.println("Mid off!");
       if(b_midorgstate){
         b_midorgstate = false;
-      }      
+      }
+      b_mid = false;      
       delay(500);
 
     } else if (strcmp(msg, lon) == 0) { //判斷接收到的訊息是否為開啟左邊方向燈
@@ -219,8 +220,8 @@ void loop() {
       Serial.println("Flash off!");
       digitalWrite(r_right, LOW);
       digitalWrite(l_right, LOW);
-      digitalWrite(r_right, LOW);
-      digitalWrite(l_right, LOW);
+      digitalWrite(r_left, LOW);
+      digitalWrite(l_left, LOW);
       if (b_midorgstate){
         b_mid = false;
       }

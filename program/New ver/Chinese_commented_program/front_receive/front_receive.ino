@@ -90,7 +90,7 @@ void loop() {
     if (digitalRead(bt_main) == true) {
       b_mid = !b_mid;
       Serial.println("Button pressed, turning signal light off and change mid light status.");
-      delay(500);
+
     }
   }
 
@@ -104,12 +104,12 @@ void loop() {
     if (strcmp(msg, on) == 0) {  //判斷接收到的訊息是否為開大燈
       Serial.println("Mid on!");
       b_mid = true;
-      delay(500);
+
 
     } else if (strcmp(msg, off) == 0) { //判斷接收到的訊息是否為開大燈
       Serial.println("Mid off!");
       b_mid = false;
-      delay(500);
+
 
     } else {
       Serial.println("Ignore!");

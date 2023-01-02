@@ -174,7 +174,7 @@ void loop() {
     if (strcmp(msg, on) == 0) {  //判斷接收到的訊息是否為開大燈
       Serial.println("Mid on!");
       b_mid = true;
-      delay(500);
+
 
     } else if (strcmp(msg, off) == 0) {  //判斷接收到的訊息是否為關大燈
       Serial.println("Mid off!");
@@ -182,7 +182,7 @@ void loop() {
         b_midorgstate = false;
       }
       b_mid = false;      
-      delay(500);
+
 
     } else if (strcmp(msg, lon) == 0) { //判斷接收到的訊息是否為開啟左邊方向燈
       Serial.println("Left on!");
@@ -199,7 +199,7 @@ void loop() {
       b_flash = true;
       b_left = true;
       b_leftstats = true;
-      delay(500);
+
 
     } else if (strcmp(msg, ron) == 0) { //判斷接收到的訊息是否為開啟右邊方向燈
       Serial.println("Right on!");
@@ -214,7 +214,7 @@ void loop() {
       b_flash = true;
       b_right = false;
       b_rightstats = true;
-      delay(500);
+
 
     } else if (strcmp(msg, foff) == 0) { //判斷接收到的訊息是否關閉方向燈或是警示燈
       Serial.println("Flash off!");
@@ -231,7 +231,7 @@ void loop() {
       b_left = false;
       b_rightstats = false;
       b_leftstats = false;
-      delay(500);
+
 
     } else if (strcmp(msg, dual) == 0) { //判斷接收到的訊息是開啟警示燈
       Serial.println("Dual Flash!"); 
@@ -247,7 +247,7 @@ void loop() {
       b_flash = true;
       b_rightstats = true;
       b_leftstats = true;
-      delay(500);
+
 
     } else {
       Serial.println("Ignore!");

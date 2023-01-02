@@ -114,27 +114,27 @@ void loop() {
       Serial.println("Main trig");
     b_mid = true;
     beep();
-    delay(500);
+
   } else if (digitalRead(bt_left) == true) { //判斷開關左轉方向燈的按鈕是否按下
     delay(200);
     if (digitalRead(bt_left) == true)
       Serial.println("Left trig");
     b_left = true;
     beep();
-    delay(500);
+
   } else if (digitalRead(bt_right) == true) { //判斷開關右轉方向燈的按鈕是否按下
     delay(200);
     if (digitalRead(bt_right) == true)
       Serial.println("Right trig");
     b_right = true;
     beep();
-    delay(500);
+
   } else if (digitalRead(bt_dual) == true) { //判斷開關警示燈的按鈕是否按下
     delay(200);
     Serial.println("Dual trig");
     b_dual = true;
     beep();
-    delay(500);
+
   }
 
 
@@ -256,7 +256,7 @@ void loop() {
       digitalWrite(l_right, HIGH);
     }
     b_dfstats = !b_dfstats;
-    delay(500);
+
   }
 }
 

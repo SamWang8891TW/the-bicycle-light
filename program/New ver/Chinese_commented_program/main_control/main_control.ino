@@ -4,6 +4,7 @@
 
 #define CE 7        //2.4G 無線模組的 CE 腳位
 #define CSN 8       //2.4G 無線模組的 CSN 腳位
+<<<<<<< HEAD
 #define l_mid A2  //大燈指示led燈腳位
 #define l_left A3 //左轉方向燈指示led燈腳位
 #define l_right A4 //右轉方向燈指示led燈腳位
@@ -12,6 +13,16 @@
 #define bt_left 5   //左轉方向燈按鈕腳位
 #define bt_right 6  //右轉方向燈按鈕腳位
 #define bt_dual 3   //警示燈按鈕腳位
+=======
+#define l_mid A0    //大燈指示led燈腳位
+#define l_left A2   //左轉方向燈指示led燈腳位
+#define l_right A3  //右轉方向燈指示led燈腳位
+#define l_stats A4  //狀態指示led燈腳位
+#define bt_mid 4    //大燈(中間)按鈕腳位
+#define bt_left 5   //左轉方向燈按鈕腳位
+#define bt_right 3  //右轉方向燈按鈕腳位
+#define bt_dual 6   //警示燈按鈕腳位
+>>>>>>> 243c3506fc21896c7481241aba4ba00d4ac3177a
 #define vmotor 9    //震動馬達繼電器腳位
 #define bz 2        //蜂鳴器繼電器腳位
 

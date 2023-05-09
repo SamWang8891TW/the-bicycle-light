@@ -4,9 +4,9 @@
 
 #define CE 7        //2.4G 無線模組的 CE 腳位
 #define CSN 8       //2.4G 無線模組的 CSN 腳位
-#define r_mid A2    //大燈(中間)繼電器腳位
-#define r_left A0   //左邊方向燈繼電器腳位
-#define r_right A1  //右邊方向燈繼電器腳位
+#define r_mid A3    //大燈(中間)繼電器腳位 A0
+#define r_left A2  //左邊方向燈繼電器腳位 A2
+#define r_right A1  //右邊方向燈繼電器腳位 A1
 #define l_mid 5     //大燈指示led燈腳位
 #define l_left 6    //左轉指示led燈腳位
 #define l_right 9   //右轉指示led燈腳位

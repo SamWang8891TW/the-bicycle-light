@@ -10,18 +10,11 @@
 #define l_stats A0  //狀態指示led燈腳位 
 #define bt_mid 4    //大燈(中間)按鈕腳位
 #define bt_left 5   //左轉方向燈按鈕腳位
-#define bt_right 6  //右轉方向燈按鈕腳位
-#define bt_dual 3   //警示燈按鈕腳位
-#define l_mid A0    //大燈指示led燈腳位
-#define l_left A2   //左轉方向燈指示led燈腳位
-#define l_right A3  //右轉方向燈指示led燈腳位
-#define l_stats A4  //狀態指示led燈腳位
-#define bt_mid 4    //大燈(中間)按鈕腳位
-#define bt_left 5   //左轉方向燈按鈕腳位
 #define bt_right 3  //右轉方向燈按鈕腳位
 #define bt_dual 6   //警示燈按鈕腳位
 #define vmotor 9    //震動馬達繼電器腳位
 #define bz 2        //蜂鳴器繼電器腳位
+#define bat_volume_detect A6 //偵測電量的腳位
 
 
 #include <SPI.h>
@@ -38,6 +31,7 @@ bool b_lstats = false;   //是否正在使用左轉燈的布林函數
 bool b_rstats = false;   //是否正在使用右轉燈的布林函數
 bool b_dfstats = false;  //是否正在使用警示燈的布林函數
 
+int bat; //電量
 
 
 //2.4G 無限模組
@@ -86,6 +80,7 @@ void setup() {
   pinMode(l_stats, OUTPUT);
   pinMode(bz, OUTPUT);
   pinMode(vmotor, OUTPUT);
+  pinMode(bat_volume_detect, INPUT);
 
   //讓所有燈都亮過一遍檢查錯誤
   Serial.println("Testing lights...");
@@ -113,6 +108,14 @@ void setup() {
 }
 
 void loop() {
+  //**********************
+  //****PART0 電量讀取*****
+  //**********************
+  
+  bat = analogRead(bat_volume_detect);
+  Serial.println(bat);  
+  
+
   //**********************
   //****PART1 偵測按鈕*****
   //**********************
